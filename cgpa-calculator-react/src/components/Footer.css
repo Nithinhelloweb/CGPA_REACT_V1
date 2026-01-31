@@ -221,8 +221,6 @@
     right: 0;
 }
 
-
-
 /* Responsive Design */
 @media only screen and (max-width: 768px) {
 
@@ -339,5 +337,39 @@
 @media only screen and (min-width: 1025px) {
     .footer-top {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (min-width: 1441px) {
+
+    .simple-footer-content,
+    .footer-container {
+        max-width: 1800px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .simple-footer-content p {
+        font-size: 18px;
+    }
+
+    .developer-link {
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 16px;
+    }
+
+    .footer-title {
+        font-size: 24px;
+    }
+
+    .footer-description,
+    .footer-links a,
+    .resource-link {
+        font-size: 16px;
+    }
+
+    .footer-credits p {
+        font-size: 18px;
     }
 }

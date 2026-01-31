@@ -341,3 +341,56 @@
         font-size: 14px;
     }
 }
+
+@media only screen and (min-width: 1441px) {
+
+    .header-container,
+    .nav-content {
+        max-width: 1800px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .header-logo,
+    .header-badge {
+        width: 75px;
+        height: 75px;
+    }
+
+    .header-title {
+        font-size: 36px;
+    }
+
+    .header-subtitle {
+        font-size: 18px;
+    }
+
+    .nav-btn {
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 16px;
+    }
+
+    .nav-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .current-page {
+        font-size: 20px;
+    }
+
+    .nav-date {
+        padding: 12px 24px;
+        border-radius: 16px;
+    }
+
+    .date-text {
+        font-size: 16px;
+    }
+
+    .calendar-icon {
+        width: 22px;
+        height: 22px;
+    }
+}

@@ -17,6 +17,16 @@
   /* Consistent max-width for all sections */
 }
 
+@media only screen and (min-width: 1441px) {
+  :root {
+    --max-width: 1800px;
+  }
+
+  body {
+    font-size: 16px;
+  }
+}
+
 * {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
@@ -253,6 +263,19 @@ ul.bullets li::before {
   margin: 18px auto;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
+}
+
+@media only screen and (min-width: 1441px) {
+
+  #calculator,
+  #user,
+  #div,
+  #button,
+  #button2,
+  #info {
+    max-width: 1000px !important;
+    padding: 40px !important;
+  }
 }
 
 #div {
