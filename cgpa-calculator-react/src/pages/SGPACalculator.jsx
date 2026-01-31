@@ -34,9 +34,8 @@ const SGPACalculator = () => {
     useEffect(() => {
         const fetchBatches = async () => {
             try {
-                const semesterParam = semester.replace('semester-', 'Sem-');
                 const deptName = getDepartmentName(department);
-                const batches = await getAvailableBatches(deptName, semesterParam);
+                const batches = await getAvailableBatches(deptName);
                 setAvailableBatches(batches);
             } catch (error) {
                 console.error('Error fetching available batches:', error);
