@@ -110,6 +110,25 @@ const SGPACalculator = () => {
         return deptMap[deptCode] || deptCode.toUpperCase();
     };
 
+    const validateRegNo = () => {
+        if (username.trim().length !== 12) {
+            showAlert('Register number must be exactly 12 digits');
+            return false;
+        }
+
+        if (!username.startsWith('714')) {
+            showAlert('Enter your Correct Register Number');
+            return false;
+        }
+        return true;
+    };
+
+    const handleBatchClick = (e) => {
+        if (!validateRegNo()) {
+            e.preventDefault();
+        }
+    };
+
     const handleGradeChange = (subjectId, value) => {
         setGrades({ ...grades, [subjectId]: value });
     };
@@ -120,13 +139,7 @@ const SGPACalculator = () => {
             return;
         }
 
-        if (username.trim().length !== 12) {
-            showAlert('Register number must be exactly 12 digits');
-            return;
-        }
-
-        if (!username.startsWith('714')) {
-            showAlert('Enter your Correct Register Number');
+        if (!validateRegNo()) {
             return;
         }
 
@@ -286,6 +299,7 @@ const SGPACalculator = () => {
                 <select
                     id="batch"
                     value={batch}
+                    onMouseDown={handleBatchClick}
                     onChange={(e) => setBatch(e.target.value)}
                     style={{
                         width: '100%',
