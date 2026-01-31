@@ -76,4 +76,16 @@ export const getRegulationForBatch = async (batch) => {
     }
 };
 
+export const loginAdmin = async (username, password) => {
+    try {
+        const response = await api.post('/api/admin/login', { username, password });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            throw new Error('Invalid username or password');
+        }
+        throw new Error('Server error during login');
+    }
+};
+
 export default api;

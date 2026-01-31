@@ -248,6 +248,19 @@ app.post('/submit-cgpa', async (req, res) => {
   }
 });
 
+// ====== ADMIN LOGIN ENDPOINT ======
+app.post('/api/admin/login', (req, res) => {
+  const { username, password } = req.body;
+  const adminUsername = process.env.ADMIN_USERNAME || 'admin';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin1112006';
+
+  if (username === adminUsername && password === adminPassword) {
+    res.json({ success: true, message: 'Login successful' });
+  } else {
+    res.status(401).json({ success: false, message: 'Invalid username or password' });
+  }
+});
+
 // Serve React app for all other routes (SPA)
 app.use((req, res, next) => {
   // If no API route matched, serve React app

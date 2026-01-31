@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { loginAdmin } from '../services/api';
 import './AdminLogin.css';
 
 const AdminLogin = () => {
@@ -18,18 +19,18 @@ const AdminLogin = () => {
         }
     }, [navigate]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
-        const adminUsername = import.meta.env.VITE_ADMIN_USERNAME;
-        const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-
-        if (username === adminUsername && password === adminPassword) {
-            sessionStorage.setItem('adminAuthenticated', 'true');
-            navigate('/admin');
-        } else {
-            setError('Invalid username or password');
+        try {
+            const response = await loginAdmin(username, password);
+            if (response.success) {
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                navigate('/admin');
+            }
+        } catch (err) {
+            setError(err.message || 'Invalid username or password');
             setPassword('');
         }
     };
