@@ -10,7 +10,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node server/server.cjs",
+    "start": "node server.js",
     "seed-regulations": "node scripts/seedRegulations.js",
     "migrate-subjects": "node scripts/migrateSubjects.js"
   },

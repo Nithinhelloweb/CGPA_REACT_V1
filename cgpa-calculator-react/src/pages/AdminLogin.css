@@ -159,6 +159,7 @@
 .input-wrapper input {
     width: 100%;
     padding: 14px 16px 14px 48px;
+    background: #FFFFFF;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
     font-size: 15px;
@@ -168,7 +169,8 @@
 
 .input-wrapper input:focus {
     border-color: #04AA6D;
-    box-shadow: 0 0 0 4px rgba(4, 170, 109, 0.1);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgb(211, 211, 211);
 }
 
 .toggle-password {

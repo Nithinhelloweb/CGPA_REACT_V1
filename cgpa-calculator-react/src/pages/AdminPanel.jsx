@@ -240,7 +240,7 @@ const AdminPanel = () => {
                                     placeholder="e.g. Data Structures"
                                     value={formData.label}
                                     onChange={(e) => setFormData({ ...formData, label: e.target.value })}
-                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none' }}
+                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', background: '#FFFFFF', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none' }}
                                     onFocus={(e) => e.target.style.borderColor = '#04AA6D'}
                                     onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
                                 />
@@ -254,7 +254,7 @@ const AdminPanel = () => {
                                     placeholder="e.g. 3.0"
                                     value={formData.credit}
                                     onChange={(e) => setFormData({ ...formData, credit: e.target.value })}
-                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none' }}
+                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', background: '#FFFFFF', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none' }}
                                     onFocus={(e) => e.target.style.borderColor = '#04AA6D'}
                                     onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
                                 />

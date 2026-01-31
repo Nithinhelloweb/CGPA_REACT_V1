@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import Subject from './models/Subject.js';
 import Submission from './models/Submission.js';
 import Regulation from './models/Regulation.js';
-import { getRegulationForBatch, getRegulationDisplayName, getRegulationFullName } from './utils/regulationMapper.js';
+import { getRegulationForBatch, getRegulationDisplayName, getRegulationFullName } from './src/utils/batchMapper.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -252,10 +252,19 @@ app.post('/submit-cgpa', async (req, res) => {
 app.use((req, res, next) => {
   // If no API route matched, serve React app
   if (!req.path.startsWith('/api') && !req.path.startsWith('/submit-cgpa') && !req.path.startsWith('/images')) {
+    const indexPath = path.join(__dirname, 'dist', 'index.html');
+    console.log(`Serving SPA index from: ${indexPath}`);
+
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error('Error sending index.html:', err);
+        res.status(404).send("Frontend build not found. Make sure 'npm run build' was executed.");
+      }
+    });
   } else {
     next();
   }
