@@ -296,7 +296,7 @@ const SGPACalculator = () => {
                             <option key={b} value={b}>{b}</option>
                         ))
                     ) : (
-                        <option value="" disabled>No batches available in DB</option>
+                        <option value="" disabled>Data Will Be Updated Soon</option>
                     )}
                 </select>
             </div>
@@ -430,6 +430,27 @@ const SGPACalculator = () => {
                             </select>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {/* Empty State Message for Subjects */}
+            {batch && !loading && subjects.length === 0 && (
+                <div style={{
+                    margin: '20px auto',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    padding: '30px',
+                    borderRadius: '20px',
+                    width: '95%',
+                    maxWidth: '700px',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+                    border: '2px dashed #04AA6D'
+                }}>
+                    <div style={{ fontSize: '40px', marginBottom: '15px' }}>⏳</div>
+                    <h3 style={{ color: '#1a4704', margin: '0 0 10px 0' }}>Data Will Be Updated Soon</h3>
+                    <p style={{ color: '#666', fontSize: '14px', margin: 0 }}>
+                        We are currently updating the subject database for the selected batch. Please check back later!
+                    </p>
                 </div>
             )}
 
