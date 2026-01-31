@@ -5,6 +5,8 @@
  * - Batches starting 2029-2032 → 29regulation
  */
 
+export const DEFAULT_BATCHES = ['2023-2027', '2024-2028', '2025-2029'];
+
 export const getRegulationForBatch = (batchString) => {
     if (!batchString) return null;
 

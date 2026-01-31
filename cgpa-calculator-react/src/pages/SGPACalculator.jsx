@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 import CustomAlert from '../components/CustomAlert';
 import { getSubjects, submitCGPA, getAvailableBatches } from '../services/api';
 import { gradeOptions } from '../utils/gradeOptions';
-import { getRegulationForBatch } from '../utils/batchMapper';
+import { getRegulationForBatch, DEFAULT_BATCHES } from '../utils/batchMapper';
 import { isBlendedSubject } from '../utils/subjectUtils';
 import { generatePDF } from '../utils/pdfGenerator';
 import { fireCelebration } from '../utils/celebration';
@@ -15,7 +15,7 @@ const SGPACalculator = () => {
     const { department, semester } = useParams();
     const [username, setUsername] = useState('');
     const [batch, setBatch] = useState('');
-    const [availableBatches, setAvailableBatches] = useState([]);
+    const [availableBatches, setAvailableBatches] = useState(DEFAULT_BATCHES);
     const [subjects, setSubjects] = useState([]);
     const [grades, setGrades] = useState({});
     const [sgpa, setSgpa] = useState(null);
@@ -35,14 +35,26 @@ const SGPACalculator = () => {
         const fetchBatches = async () => {
             try {
                 const deptName = getDepartmentName(department);
-                const batches = await getAvailableBatches(deptName);
-                setAvailableBatches(batches);
+                const fetchedBatches = await getAvailableBatches(deptName);
+
+                setAvailableBatches(prev => {
+                    // Combine defaults with fetched, remove duplicates, and sort
+                    const combined = [...new Set([...DEFAULT_BATCHES, ...fetchedBatches])];
+                    return combined.sort((a, b) => b.localeCompare(a));
+                });
             } catch (error) {
                 console.error('Error fetching available batches:', error);
             }
         };
+
+        // Initial fetch
         fetchBatches();
-    }, [department, semester]);
+
+        // Poll every 60 seconds
+        const intervalId = setInterval(fetchBatches, 60000);
+
+        return () => clearInterval(intervalId);
+    }, [department]);
 
     useEffect(() => {
         if (batch) {
