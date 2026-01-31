@@ -121,7 +121,12 @@ const SGPACalculator = () => {
         }
 
         if (username.trim().length !== 12) {
-            showAlert('Enter a valid 12-digit register number');
+            showAlert('Register number must be exactly 12 digits');
+            return;
+        }
+
+        if (!username.startsWith('714')) {
+            showAlert('Enter your Correct Register Number');
             return;
         }
 
@@ -249,7 +254,10 @@ const SGPACalculator = () => {
                     type="text"
                     id="username"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, ''); // Only allow digits
+                        if (val.length <= 12) setUsername(val);
+                    }}
                     placeholder="Enter 12-digit register number"
                     required
                     style={{
