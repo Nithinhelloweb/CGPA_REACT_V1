@@ -4,6 +4,13 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.department-select-page footer {
+    margin-top: auto;
 }
 
 /* Page Hero */
@@ -206,7 +213,7 @@
 
     .page-hero {
         padding: 30px 15px;
-        margin: 15px auto;
+        margin: 5px 0px 5px;
     }
 
     .page-title {

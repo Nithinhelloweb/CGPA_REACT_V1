@@ -17,8 +17,8 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/calculate" element={<DepartmentSelect />} />
-        <Route path="/calculate/:department" element={<SemesterSelect />} />
+        <Route path="/calculate" element={<SGPACalculator />} />
+        <Route path="/calculate/:department" element={<SGPACalculator />} />
         <Route path="/calculate/:department/:semester" element={<SGPACalculator />} />
         <Route path="/cgpa" element={<CGPACalculator />} />
         <Route path="/developer" element={<DeveloperInfo />} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Header.css';
 
-const Header = () => {
+const Header = ({ customBack, customBackLabel }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -11,7 +11,7 @@ const Header = () => {
     const showNavigation = location.pathname !== '/';
 
     const formatDate = () => {
-        const options = { day: '2-digit', month: 'long', year: 'numeric' };
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
         return new Date().toLocaleDateString('en-GB', options);
     };
 
@@ -71,13 +71,13 @@ const Header = () => {
                         <div className="nav-controls">
                             <button
                                 className="nav-btn back-btn"
-                                onClick={() => navigate(-1)}
+                                onClick={customBack || (() => navigate(-1))}
                                 aria-label="Go back"
                             >
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M19 12H5M12 19l-7-7 7-7" />
                                 </svg>
-                                <span>Back</span>
+                                <span>{customBackLabel || 'Back'}</span>
                             </button>
 
                             <Link to="/" className="nav-btn home-btn" aria-label="Go to home">

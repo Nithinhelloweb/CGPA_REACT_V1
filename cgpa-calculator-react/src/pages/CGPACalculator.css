@@ -230,6 +230,8 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    padding-left: 35px;
+    /* Add space for the button */
 }
 
 .semester-label {
@@ -255,10 +257,14 @@
     box-shadow: 0 2px 8px rgba(4, 170, 109, 0.3);
 }
 
+/* Remove Semester Button */
 .remove-semester-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
+    /* Moved to top-left */
+    right: auto;
+    /* Reset right */
     background: #ff4d4d;
     color: white;
     border: none;
@@ -525,7 +531,7 @@
 
 @media (max-width: 480px) {
     .cgpa-header {
-        padding: 15px;
+        padding: 20px 15px;
     }
 
     .cgpa-header h1 {
@@ -537,44 +543,73 @@
         padding: 15px;
     }
 
+    /* Compact Semester Card for Mobile */
     .semester-card {
         padding: 15px;
         display: flex;
         flex-direction: column;
+        gap: 12px;
+        position: relative;
     }
 
     .semester-card-header {
-        margin-bottom: 12px;
+        margin-bottom: 0px;
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-left: 35px;
+        /* Ensure space on mobile too */
+    }
+
+    .semester-label {
+        font-size: 14px;
+        gap: 8px;
+    }
+
+    /* Removed .semester-number styles */
+
+    .remove-semester-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        position: absolute;
+        /* Keep absolute for top-left */
+        top: 10px;
+        left: 10px;
+        margin-left: 0;
     }
 
     .semester-inputs {
-        /* Keep grid for inputs row */
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        /* Stack inputs vertically for better focus */
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        /* Label on top */
+        align-items: flex-start;
+        gap: 8px;
     }
 
     .input-group label {
-        font-size: 12px;
+        font-size: 13px;
+        margin-bottom: 0;
+        width: 100%;
+        /* Full width label */
+        flex-shrink: 0;
     }
 
     .input-group input {
         padding: 10px 12px;
-        font-size: 14px;
+        font-size: 15px;
         width: 100%;
-        /* Force full width */
-    }
-
-    .remove-semester-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 13px;
-        top: 10px;
-        right: 10px;
+        height: 42px;
+        /* Taller input */
     }
 
     .cgpa-result {

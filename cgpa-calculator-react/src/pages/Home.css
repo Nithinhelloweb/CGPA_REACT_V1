@@ -5,6 +5,13 @@
     margin: 0;
     padding: 0;
     max-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-page footer {
+    margin-top: auto;
 }
 
 /* Hero Section */

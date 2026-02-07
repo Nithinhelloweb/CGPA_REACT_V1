@@ -89,6 +89,12 @@
     width: 100%;
 }
 
+@media only screen and (max-width: 768px) {
+    .navigation-bar {
+        margin-bottom: 0px;
+    }
+}
+
 @keyframes gradientBG {
     0% {
         background-position: 0% 50%;
@@ -151,9 +157,7 @@
 
 /* Page Info */
 .nav-page-info {
-    flex: 1;
-    text-align: center;
-    min-width: 0;
+    display: none;
 }
 
 .current-page {
@@ -234,69 +238,82 @@
 
     /* Mobile-optimized container */
     .header-container {
-        padding: 12px 10px;
+        padding: 5px 10px;
         gap: 8px;
         max-width: 99%;
     }
 
     .header-logo,
     .header-badge {
-        width: 45px;
-        height: 45px;
+        width: 30px;
+        height: 30px;
     }
 
     .header-title {
-        font-size: 15px;
+        font-size: 13px;
+        white-space: normal;
+        line-height: 1.2;
+        margin-bottom: 2px;
+        text-align: center;
     }
 
     .header-subtitle {
-        font-size: 11px;
+        display: block;
+        font-size: 10px;
+        color: #1a4704;
+        opacity: 0.9;
     }
 
     .nav-content {
-        padding: 10px 10px;
+        padding: 4px 10px;
         gap: 8px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         max-width: 99%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .nav-controls {
-        gap: 8px;
+        gap: 5px;
+        flex-shrink: 0;
     }
 
     .nav-btn {
-        padding: 6px 12px;
-        font-size: 13px;
-        gap: 6px;
+        padding: 6px 10px;
+        font-size: 12px;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    .nav-btn span {
+        display: none;
     }
 
     .nav-btn svg {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
     }
 
-    .nav-page-info {
-        order: 3;
-        flex-basis: 100%;
-        margin-top: 5px;
-    }
+
 
     .current-page {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .nav-date {
-        padding: 6px 12px;
-        gap: 6px;
+        padding: 6px 10px;
+        gap: 4px;
+        flex-shrink: 0;
     }
 
     .date-text {
+        display: inline-block;
         font-size: 12px;
     }
 
     .calendar-icon {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
     }
 
     .scroll-to-top {
