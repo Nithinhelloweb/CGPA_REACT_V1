@@ -20,7 +20,11 @@ const CGPACalculator = () => {
     };
 
     const addSemester = () => {
-        setSemesters([...semesters, { sgpa: '', credits: '' }]);
+        if (semesters.length < 8) {
+            setSemesters([...semesters, { sgpa: '', credits: '' }]);
+        } else {
+            showAlert('Maximum 8 semesters allowed');
+        }
     };
 
     const removeSemester = (index) => {

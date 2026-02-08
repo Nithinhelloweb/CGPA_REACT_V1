@@ -6,7 +6,7 @@ import SkeletonLoader from '../components/SkeletonLoader';
 import CustomAlert from '../components/CustomAlert';
 import { getSubjects, submitCGPA, getAvailableBatches } from '../services/api';
 import { gradeOptions } from '../utils/gradeOptions';
-import { getRegulationForBatch, DEFAULT_BATCHES } from '../utils/batchMapper';
+import { getRegulationForBatch, DEFAULT_BATCHES, getRegulationFullName } from '../utils/batchMapper';
 import { isBlendedSubject } from '../utils/subjectUtils';
 import { generatePDF } from '../utils/pdfGenerator';
 import { fireCelebration } from '../utils/celebration';
@@ -49,8 +49,6 @@ const SGPACalculator = () => {
         };
 
         fetchBatches();
-        const intervalId = setInterval(fetchBatches, 60000);
-        return () => clearInterval(intervalId);
     }, []);
 
     // Effect to handle backward compatibility or direct URL access if we needed it, 
@@ -257,7 +255,7 @@ const SGPACalculator = () => {
                         </div>
                         <div className="card-content">
                             <h3 className="card-title">{b}</h3>
-                            <p className="card-subtitle">Regulation {b}</p>
+                            <p className="card-subtitle">{getRegulationFullName(getRegulationForBatch(b))}</p>
                         </div>
                         <div className="card-arrow">
                             <svg viewBox="0 0 20 20" fill="currentColor">
