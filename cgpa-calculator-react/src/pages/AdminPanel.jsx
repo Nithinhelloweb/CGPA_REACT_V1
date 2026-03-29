@@ -80,7 +80,7 @@ const AdminPanel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.label || !formData.credit || !formData.semester || !formData.department || !formData.batch || !formData.regulation) {
+        if (!formData.label || formData.credit === '' || !formData.semester || !formData.department || !formData.batch || !formData.regulation) {
             showAlert('Please fill all fields');
             return;
         }
@@ -240,7 +240,7 @@ const AdminPanel = () => {
                                     placeholder="e.g. Data Structures"
                                     value={formData.label}
                                     onChange={(e) => setFormData({ ...formData, label: e.target.value })}
-                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', background: '#FFFFFF', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none' }}
+                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', background: '#FFFFFF', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none', color: '#333' }}
                                     onFocus={(e) => e.target.style.borderColor = '#04AA6D'}
                                     onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
                                 />
@@ -249,12 +249,18 @@ const AdminPanel = () => {
                             <div className="form-group">
                                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#555', fontSize: '14px' }}>Credits</label>
                                 <input
-                                    type="number"
-                                    step="0.5"
+                                    type="text"
+                                    inputMode="decimal"
+                                    pattern="[0-9]*\.?[0-9]*"
                                     placeholder="e.g. 3.0"
                                     value={formData.credit}
-                                    onChange={(e) => setFormData({ ...formData, credit: e.target.value })}
-                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', background: '#FFFFFF', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none' }}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        if (val === '' || /^[0-9]*\.?[0-9]*$/.test(val)) {
+                                            setFormData({ ...formData, credit: val });
+                                        }
+                                    }}
+                                    style={{ width: '100%', padding: '12px 15px', borderRadius: '10px', background: '#FFFFFF', border: '2px solid #e0e0e0', fontSize: '14px', transition: 'all 0.3s', outline: 'none', color: '#333' }}
                                     onFocus={(e) => e.target.style.borderColor = '#04AA6D'}
                                     onBlur={(e) => e.target.style.borderColor = '#e0e0e0'}
                                 />

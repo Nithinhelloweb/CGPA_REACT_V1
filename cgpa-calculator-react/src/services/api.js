@@ -81,10 +81,17 @@ export const loginAdmin = async (username, password) => {
         const response = await api.post('/api/admin/login', { username, password });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.status === 401) {
+        if (!error.response) {
+            // Network error - backend server is not running
+            throw new Error('Cannot connect to server. Please make sure the backend server is running.');
+        }
+        if (error.response.status === 401) {
             throw new Error('Invalid username or password');
         }
-        throw new Error('Server error during login');
+        if (error.response.status === 500) {
+            throw new Error(error.response.data?.message || 'Server configuration error');
+        }
+        throw new Error('Login failed. Please try again.');
     }
 };
 

@@ -59,7 +59,7 @@ app.get('/api/subjects', async (req, res) => {
 app.post('/api/subjects', async (req, res) => {
   const { label, credit, semester, department, batch, regulation } = req.body;
 
-  if (!label || !credit || !semester || !department || !batch || !regulation) {
+  if (!label || credit === undefined || credit === null || credit === '' || !semester || !department || !batch || !regulation) {
     return res.status(400).json({ message: 'All fields are required including regulation' });
   }
 
@@ -194,7 +194,7 @@ app.put('/api/subjects/:id', async (req, res) => {
   const { id } = req.params;
   const { label, credit, semester, department, batch, regulation } = req.body;
 
-  if (!label || !credit || !semester || !department || !batch || !regulation) {
+  if (!label || credit === undefined || credit === null || credit === '' || !semester || !department || !batch || !regulation) {
     return res.status(400).json({ message: 'All fields are required including regulation' });
   }
 
@@ -251,8 +251,12 @@ app.post('/submit-cgpa', async (req, res) => {
 // ====== ADMIN LOGIN ENDPOINT ======
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
-  const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin1112006';
+  const adminUsername = process.env.VITE_ADMIN_USERNAME;
+  const adminPassword = process.env.VITE_ADMIN_PASSWORD;
+
+  if (!adminUsername || !adminPassword) {
+    return res.status(500).json({ success: false, message: 'Admin credentials not configured on server' });
+  }
 
   if (username === adminUsername && password === adminPassword) {
     res.json({ success: true, message: 'Login successful' });
