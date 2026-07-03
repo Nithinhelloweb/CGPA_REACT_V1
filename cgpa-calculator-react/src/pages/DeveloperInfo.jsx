@@ -333,6 +333,14 @@ const DeveloperInfo = () => {
     const formRef = useRef();
     const heroRef = useRef(null);
 
+    // Sync browser banner / tab bar colour with the dark portfolio theme
+    useEffect(() => {
+        const meta = document.querySelector('meta[name="theme-color"]');
+        const prev = meta ? meta.getAttribute('content') : '#f5f5f5';
+        if (meta) meta.setAttribute('content', '#020817');
+        return () => { if (meta) meta.setAttribute('content', prev); };
+    }, []);
+
     // Parallax on hero scroll
     useEffect(() => {
         const onScroll = () => {
@@ -750,8 +758,9 @@ const DeveloperInfo = () => {
 
                             <div className="dev-quote">
                                 <span className="quote-mark">"</span>
-                                Programming isn't about what you know; it's about what you can figure out.
+                                Dream is not that which you see while sleeping; it is something that does not let you sleep.
                                 <span className="quote-mark">"</span>
+                                <span className="quote-author">— Dr. APJ Abdul Kalam</span>
                             </div>
                         </div>
                     </Reveal>

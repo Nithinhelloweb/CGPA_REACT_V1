@@ -274,6 +274,11 @@ app.post('/api/contact', async (req, res) => {
     return res.status(400).json({ success: false, message: 'All fields are required.' });
   }
 
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.error('[/api/contact] Missing GMAIL_USER or GMAIL_APP_PASSWORD env vars.');
+    return res.status(500).json({ success: false, message: 'Email service not configured on server.' });
+  }
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -306,7 +311,7 @@ app.post('/api/contact', async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.json({ success: true, message: 'Email sent successfully.' });
   } catch (err) {
-    console.error('Nodemailer error:', err);
+    console.error('[/api/contact] Nodemailer error:', err.message || err);
     res.status(500).json({ success: false, message: 'Failed to send email.' });
   }
 });
