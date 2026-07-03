@@ -212,12 +212,12 @@
     margin-bottom: 1rem; font-weight: 500;
 }
 
-/* Animated name */
 .hero-name {
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-size: clamp(1.8rem, 6.2vw, 5.5rem);
     font-weight: 700; line-height: 1.05;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     margin-bottom: 1rem;
+    white-space: nowrap;
 }
 .char {
     display: inline-block;
