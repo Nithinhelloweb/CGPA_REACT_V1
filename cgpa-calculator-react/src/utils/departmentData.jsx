@@ -7,7 +7,7 @@ export const departments = [
     { code: 'ece', name: 'Electronics and Communication Engineering', shortName: 'ECE', icon: 'circuit' },
     { code: 'eee', name: 'Electrical and Electronics Engineering', shortName: 'EEE', icon: 'bolt' },
     { code: 'it', name: 'Information Technology', shortName: 'IT', icon: 'network' },
-    { code: 'cyber', name: 'Cyber Security', shortName: 'CS', icon: 'shield' },
+    { code: 'cyber', name: 'Cyber Security', shortName: 'CYBER', icon: 'shield' },
     { code: 'vlsi', name: 'Very Large Scale Integration', shortName: 'VLSI', icon: 'chip' },
     { code: 'ft', name: 'Food Technology', shortName: 'FT', icon: 'food' },
     { code: 'bt', name: 'Bio Technology', shortName: 'BT', icon: 'bio' },
