@@ -336,9 +336,9 @@ const DeveloperInfo = () => {
     // Sync browser banner / tab bar colour with the dark portfolio theme
     useEffect(() => {
         const meta = document.querySelector('meta[name="theme-color"]');
-        const prev = meta ? meta.getAttribute('content') : '#f5f5f5';
+        const prev = meta ? meta.getAttribute('content') : '#ffffff';
         if (meta) meta.setAttribute('content', '#020817');
-        return () => { if (meta) meta.setAttribute('content', prev); };
+        return () => { if (meta) meta.setAttribute('content', '#ffffff'); };
     }, []);
 
     // Parallax on hero scroll
