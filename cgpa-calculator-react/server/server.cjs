@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 const Subject = require('./models/Subject.cjs');
 const Submission = require('./models/Submission.cjs');
 const Regulation = require('./models/Regulation.cjs');
@@ -295,46 +294,43 @@ app.post('/api/contact', async (req, res) => {
     return res.status(400).json({ success: false, message: 'All fields are required.' });
   }
 
-  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.error('[/api/contact] Missing GMAIL_USER or GMAIL_APP_PASSWORD env vars.');
+  if (!process.env.RESEND_API_KEY) {
+    console.error('[/api/contact] Missing RESEND_API_KEY env var.');
     return res.status(500).json({ success: false, message: 'Email service not configured on server.' });
   }
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  });
-
-  const mailOptions = {
-    from: `"${from_name}" <${process.env.GMAIL_USER}>`,
-    to: process.env.GMAIL_USER,
-    replyTo: from_email,
-    subject: `📬 Portfolio Contact from ${from_name}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:560px;margin:auto;padding:24px;background:#f9fafb;border-radius:12px;border:1px solid #e5e7eb;">
-        <h2 style="color:#0f172a;margin-bottom:4px;">New Message from Portfolio</h2>
-        <p style="color:#6b7280;font-size:13px;margin-bottom:24px;">Sent via contact form</p>
-        <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:8px 0;color:#374151;font-weight:600;width:100px;">Name</td><td style="padding:8px 0;color:#111827;">${from_name}</td></tr>
-          <tr><td style="padding:8px 0;color:#374151;font-weight:600;">Email</td><td style="padding:8px 0;"><a href="mailto:${from_email}" style="color:#38bdf8;">${from_email}</a></td></tr>
-        </table>
-        <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;"/>
-        <p style="color:#374151;font-weight:600;margin-bottom:8px;">Message</p>
-        <p style="color:#111827;line-height:1.7;white-space:pre-wrap;">${message}</p>
-      </div>
-    `,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
+    const { Resend } = require('resend');
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const emailResponse = await resend.emails.send({
+      from: 'Portfolio Contact Form <onboarding@resend.dev>',
+      to: 'nithinkvn.kvn@gmail.com',
+      replyTo: from_email,
+      subject: `📬 Portfolio Contact from ${from_name}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:560px;margin:auto;padding:24px;background:#f9fafb;border-radius:12px;border:1px solid #e5e7eb;">
+          <h2 style="color:#0f172a;margin-bottom:4px;">New Message from Portfolio</h2>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:24px;">Sent via contact form</p>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="padding:8px 0;color:#374151;font-weight:600;width:100px;">Name</td><td style="padding:8px 0;color:#111827;">${from_name}</td></tr>
+            <tr><td style="padding:8px 0;color:#374151;font-weight:600;">Email</td><td style="padding:8px 0;"><a href="mailto:${from_email}" style="color:#38bdf8;">${from_email}</a></td></tr>
+          </table>
+          <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;"/>
+          <p style="color:#374151;font-weight:600;margin-bottom:8px;">Message</p>
+          <p style="color:#111827;line-height:1.7;white-space:pre-wrap;">${message}</p>
+        </div>
+      `,
+    });
+
+    if (emailResponse.error) {
+      console.error('[/api/contact] Resend API error:', emailResponse.error);
+      return res.status(500).json({ success: false, message: 'Failed to send email.' });
+    }
+
     res.json({ success: true, message: 'Email sent successfully.' });
   } catch (err) {
-    console.error('[/api/contact] Nodemailer error:', err.message || err);
+    console.error('[/api/contact] Service exception:', err.message || err);
     res.status(500).json({ success: false, message: 'Failed to send email.' });
   }
 });
