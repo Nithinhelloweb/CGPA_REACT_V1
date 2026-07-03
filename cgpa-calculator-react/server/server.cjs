@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 const Subject = require('./models/Subject.cjs');
 const Submission = require('./models/Submission.cjs');
 const Regulation = require('./models/Regulation.cjs');

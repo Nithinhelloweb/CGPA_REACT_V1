@@ -2,7 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import nodemailer from 'nodemailer';
 import Subject from './models/Subject.js';
 import Submission from './models/Submission.js';
 import Regulation from './models/Regulation.js';
