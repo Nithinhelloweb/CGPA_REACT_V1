@@ -757,9 +757,7 @@ const DeveloperInfo = () => {
                             </div>
 
                             <div className="dev-quote">
-                                <span className="quote-mark">"</span>
                                 Dream is not that which you see while sleeping; it is something that does not let you sleep.
-                                <span className="quote-mark">"</span>
                                 <span className="quote-author">— Dr. APJ Abdul Kalam</span>
                             </div>
                         </div>
