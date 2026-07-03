@@ -329,6 +329,7 @@ const DeveloperInfo = () => {
     const [sendError, setSendError] = useState('');
     const [isPlaying, setIsPlaying] = useState(false);
     const [activeSkill, setActiveSkill] = useState(null);
+    const [copied, setCopied] = useState(false);
     const audioRef = useRef(null);
     const formRef = useRef();
     const heroRef = useRef(null);
@@ -371,34 +372,25 @@ const DeveloperInfo = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSending(true);
-        setSendError('');
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText('nithinkvn.kvn@gmail.com');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
-        try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    from_name: formData.name,
-                    from_email: formData.email,
-                    message: formData.message,
-                }),
-            });
-            const data = await res.json();
-            if (res.ok && data.success) {
-                setIsSubmitted(true);
-                setFormData({ name: '', email: '', message: '' });
-            } else {
-                setSendError(data.message || 'Failed to send message. Please try again or email me directly at nithinkvn.kvn@gmail.com');
-            }
-        } catch (err) {
-            console.error('Contact error:', err);
-            setSendError('Failed to send message. Please try again or email me directly at nithinkvn.kvn@gmail.com');
-        } finally {
-            setIsSending(false);
-        }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const subject = encodeURIComponent(`📬 Portfolio Contact from ${formData.name}`);
+        const body = encodeURIComponent(
+            `Hi Nithinprabu,\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}`
+        );
+        
+        // Open native mail app with mailto parameters
+        window.location.href = `mailto:nithinkvn.kvn@gmail.com?subject=${subject}&body=${body}`;
+        
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
     };
 
     return (
@@ -729,16 +721,16 @@ const DeveloperInfo = () => {
                         <div className="contact-info-panel glass-card">
                             <h3>Get In Touch</h3>
                             <div className="contact-links">
-                                <a href="mailto:nithinkvn.kvn@gmail.com" className="contact-link-card">
+                                <button onClick={handleCopyEmail} className="contact-link-card" style={{ background: 'transparent', width: '100%', textAlign: 'left', cursor: 'pointer' }}>
                                     <div className="cl-icon email-icon">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                                     </div>
                                     <div className="cl-text">
-                                        <span className="cl-label">Email</span>
+                                        <span className="cl-label">{copied ? 'Copied to Clipboard!' : 'Email'}</span>
                                         <span className="cl-value">nithinkvn.kvn@gmail.com</span>
                                     </div>
-                                    <svg className="cl-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
-                                </a>
+                                    <svg className="cl-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 5H19V16M19 5L5 19" /></svg>
+                                </button>
                                 <a href="https://www.linkedin.com/in/nithin-prabu-21b415338" target="_blank" rel="noopener noreferrer" className="contact-link-card linkedin">
                                     <div className="cl-icon linkedin-icon">
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
@@ -771,9 +763,9 @@ const DeveloperInfo = () => {
                                     <div className="success-ring">
                                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                                     </div>
-                                    <h3>Message Sent! 🎉</h3>
-                                    <p>Thanks for reaching out! I'll get back to you as soon as possible.</p>
-                                    <button onClick={() => setIsSubmitted(false)} className="btn-outline small">Send Another</button>
+                                    <h3>Email Draft Ready! ✉️</h3>
+                                    <p>Your mail application should have opened. If not, feel free to copy my address directly.</p>
+                                    <button onClick={() => setIsSubmitted(false)} className="btn-outline small">Open Form Again</button>
                                 </div>
                             ) : (
                                 <form ref={formRef} onSubmit={handleSubmit} className="contact-form">
@@ -803,18 +795,8 @@ const DeveloperInfo = () => {
                                                 onChange={handleChange} placeholder="Hello, I'd love to collaborate on..." rows="5" required />
                                         </div>
                                     </div>
-                                    {sendError && (
-                                        <div className="send-error-msg">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
-                                            {sendError}
-                                        </div>
-                                    )}
-                                    <button type="submit" className={`btn-primary full ${isSending ? 'sending' : ''}`} disabled={isSending}>
-                                        {isSending ? (
-                                            <><span className="spinner" /> Sending…</>
-                                        ) : (
-                                            <><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg> Send Message</>
-                                        )}
+                                    <button type="submit" className="btn-primary full">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg> Send Email
                                     </button>
                                 </form>
                             )}

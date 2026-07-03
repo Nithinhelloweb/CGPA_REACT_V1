@@ -287,57 +287,7 @@ app.post('/api/admin/login', (req, res) => {
   }
 });
 
-// ====== CONTACT FORM EMAIL ENDPOINT ======
-app.post('/api/contact', async (req, res) => {
-  const { from_name, from_email, message } = req.body;
 
-  if (!from_name || !from_email || !message) {
-    return res.status(400).json({ success: false, message: 'All fields are required.' });
-  }
-
-  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.error('[/api/contact] Missing GMAIL_USER or GMAIL_APP_PASSWORD env vars.');
-    return res.status(500).json({ success: false, message: 'Email service not configured on server.' });
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  });
-
-  const mailOptions = {
-    from: `"${from_name}" <${process.env.GMAIL_USER}>`,
-    to: process.env.GMAIL_USER,
-    replyTo: from_email,
-    subject: `📬 Portfolio Contact from ${from_name}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:560px;margin:auto;padding:24px;background:#f9fafb;border-radius:12px;border:1px solid #e5e7eb;">
-        <h2 style="color:#0f172a;margin-bottom:4px;">New Message from Portfolio</h2>
-        <p style="color:#6b7280;font-size:13px;margin-bottom:24px;">Sent via contact form</p>
-        <table style="width:100%;border-collapse:collapse;">
-          <tr><td style="padding:8px 0;color:#374151;font-weight:600;width:100px;">Name</td><td style="padding:8px 0;color:#111827;">${from_name}</td></tr>
-          <tr><td style="padding:8px 0;color:#374151;font-weight:600;">Email</td><td style="padding:8px 0;"><a href="mailto:${from_email}" style="color:#38bdf8;">${from_email}</a></td></tr>
-        </table>
-        <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb;"/>
-        <p style="color:#374151;font-weight:600;margin-bottom:8px;">Message</p>
-        <p style="color:#111827;line-height:1.7;white-space:pre-wrap;">${message}</p>
-      </div>
-    `,
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.json({ success: true, message: 'Email sent successfully.' });
-  } catch (err) {
-    console.error('[/api/contact] Nodemailer error:', err.message || err);
-    res.status(500).json({ success: false, message: 'Failed to send email.' });
-  }
-});
 
 // Start server
 const PORT = process.env.PORT || 3000;
